@@ -13,7 +13,7 @@
 
 	@mysql_select_db("ekene3", $con);
 
-	$result = @mysql_query("DELETE FROM Inventory WHERE itemName = '$name' ");
+	$result = @mysql_query("DELETE FROM Inventory WHERE ItemName = '$name' ");
 
 	echo $name . " has been deleted from Inventory";
 

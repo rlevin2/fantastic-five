@@ -3,19 +3,19 @@
 
 <title>Admin: Add Item</title>
 <?php
-	
+	$price11 = $_POST['price11'];
 	$name1 = $_POST['name'];
 	$name = strtoupper($name1);
-	$price3 = $_POST['price3'] *100;
-	$price2 = $_POST['price2'] *10;
-	$price1 = $_POST['price1'];
-	$priceTens = $_POST['priceTens'] *.1;
-	$priceHundreds = $_POST['priceHundreds'] *.01;
+	//$price3 = $_POST['price3'] *100;
+	//$price2 = $_POST['price2'] *10;
+	//$price1 = $_POST['price1'];
+	//$priceTens = $_POST['priceTens'] *.1;
+	//$priceHundreds = $_POST['priceHundreds'] *.01;
 	$catagory = $_POST['catagory'];
 	$quantity = $_POST['quantity'];
 	$description = $_POST['description'];
 	$itemId = 1;
-	$price = $price3 + $price2 + $price1 +$priceTens + $priceHundreds;
+	//$price = $price3 + $price2 + $price1 +$priceTens + $priceHundreds;
 	$itemExists = 0;
 	$newQuantity = 1;
 $con = @mysql_connect("studentdb.gl.umbc.edu", "ekene3", "fantastic");
@@ -34,29 +34,29 @@ while($row = @mysql_fetch_array($result)){
 		
 	}
 }
-if($itemExists == 0){
+
+if(!is_numeric($price11)){
+	echo "The price " . $price11 . " you entered is not valid, item not added to database<br /><br />";
+}
+else if(is_null($name) or $name == ""){
+	echo "the name entered is not valid, item not added";
+}
+else if($itemExists == 0){
 	@mysql_query("INSERT INTO Inventory (price, catagory, itemName, quantity, description)
-	VALUES ('$itemId', 
+	VALUES ('$price11', 
 	'$catagory',
 	'$name',
 	'$quantity',
 	'$description' )");
 }
-//else{
-//	$result = @mysql_query("SELECT * FROM Inventory WHERE itemName = '$name'");
-//	While($row = @mysql_fetch_array($result)){		
-//		$newQuantity = $row['quantity'] + $quantity;
-//	}
-//	$result = @mysql_query("UPDATE Inventory SET quantity = '$newQuantity' WHERE itemName = '$name'" );
-//}
 
 	$result = @mysql_query("SELECT * FROM Inventory WHERE itemName='$name'");
 	While($row = @mysql_fetch_array($result)){
 		echo "Item ID:  ";
 		echo $row['itemId'];
 		echo "<br />";
-		echo "$" . "Price:  ";
-		echo $row['price'];
+		echo "Price:  ";
+		echo "$" . $row['price'];
 		echo "<br />";
 		echo "catagory:  ";
 		echo $row['catagory'];
